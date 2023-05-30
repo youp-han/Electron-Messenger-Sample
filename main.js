@@ -1,24 +1,30 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
+let mainWindow;
+const userAgent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.131 Safari/537.36';
 
 const createWindow = () => {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+  mainWindow = new BrowserWindow({
+    width: 280,
+    height: 250,
+    show: false,
+    autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, './preload.js')
     }
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  mainWindow.loadFile(path.join(__dirname, './index.html'));
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
-  
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show();
+  });
 }
 
 // This method will be called when Electron has finished
@@ -26,7 +32,6 @@ const createWindow = () => {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow()
-
   app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
@@ -41,7 +46,26 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit()
 })
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
-app.disableHardwareAcceleration();
 
+ipcMain.on('redirect', (event, clickedURL) => {
+
+  win = new BrowserWindow(
+    {
+      width: 900,
+      height: 600,
+      webPreferences: {
+        nodeIntegration: true,
+      }
+    }
+  );
+  
+
+  // Perform your login validation here
+  const appURL = clickedURL;
+  console.log("ipcMain = " + appURL);
+  win.loadURL(appURL, { userAgent });
+  
+  win.webContents.reloadIgnoringCache();
+
+
+});
