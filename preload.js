@@ -1,16 +1,13 @@
-const {ipcRenderer  } = require('electron');
+const {ipcRenderer, contextBridge  } = require('electron');
 
 
-// All the Node.js APIs are available in the preload process.
-// It has the same sandbox as a Chrome extension.
-window.addEventListener('DOMContentLoaded', () => {
+////////////////////////////////////////////////////////////////
+// a new Style of ipcrender handling using contextBridge
+////////////////////////////////////////////////////////////////
 
-  document.getElementById('telegram').addEventListener('click', function() {openSesami("https://web.telegram.org")});
-  document.getElementById('discord').addEventListener('click', function() {openSesami("https://discord.com")});
-  document.getElementById('whatsapp').addEventListener('click', function() {openSesami("https://web.whatsapp.com/")});
+contextBridge.exposeInMainWorld('myapi', {
+  send: (channel, data) => ipcRenderer.invoke( channel, data),
+  handle: ( channel, callable, event, data ) => ipcRenderer.on( channel, callable( event, data ) )
 
 })
 
-function openSesami(targetURL){
-  ipcRenderer.send('redirect', targetURL );
-}

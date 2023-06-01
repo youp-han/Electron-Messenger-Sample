@@ -13,12 +13,12 @@ const createWindow = () => {
     autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
-      preload: path.join(__dirname, './preload.js')
+      preload: path.join(__dirname, 'preload.js')
     }
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, './index.html'));
+  mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -47,8 +47,12 @@ app.on('window-all-closed', () => {
 })
 
 
-ipcMain.on('redirect', (event, clickedURL) => {
+////////////////////////////////////////////////////////////////
+// a new Style of receiving messages from the ipcrender
+////////////////////////////////////////////////////////////////
 
+ipcMain.handle('redirect-new', async(event, data) =>{
+  console.log(data);
   win = new BrowserWindow(
     {
       width: 900,
@@ -61,11 +65,10 @@ ipcMain.on('redirect', (event, clickedURL) => {
   
 
   // Perform your login validation here
-  const appURL = clickedURL;
+  const appURL = data;
   console.log("ipcMain = " + appURL);
   win.loadURL(appURL, { userAgent });
   
   win.webContents.reloadIgnoringCache();
-
-
 });
+
