@@ -57,6 +57,7 @@ ipcMain.handle('redirect-new', async(event, data) =>{
     {
       width: 900,
       height: 600,
+      autoHideMenuBar: true,
       webPreferences: {
         nodeIntegration: true,
       }
