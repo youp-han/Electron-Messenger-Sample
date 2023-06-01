@@ -18,5 +18,7 @@
 # current version
 - 0.0.2
 
+
+# inter-process-communication used 
+
 ![image](https://github.com/youp-han/Electron-Messenger-Sample/assets/5876977/0a5fccdd-f0af-400d-9c84-3ecefe9bdbd6)
-<inter-process-communication used>
