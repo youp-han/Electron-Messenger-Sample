@@ -14,9 +14,12 @@
 - npm install -> to download necessary packages
 - npm start -> to test run the application
 - npm run make -> to build exe / dmg file
-
-- 환경변수(CSC_NAME, APPLE_ID, APPLE_APP_SPECIFIC_PW, APPLE_TEAM_ID)는 맥 운영 배포 빌드 시에만 세팅 
-- mac: assets/icon.icns, win: assets/icon.ico
+  - for mac:
+    - out/make/*.dmg
+    - out/make/*.zip
+    
+  - 환경변수(CSC_NAME, APPLE_ID, APPLE_APP_SPECIFIC_PW, APPLE_TEAM_ID)는 맥 운영 배포 빌드 시에만 세팅 
+  - mac: assets/icon.icns, win: assets/icon.ico
 
 # current version
 - 0.0.3
