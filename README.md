@@ -1,5 +1,7 @@
 # Electron Messenger Sample
 
+[Korean Readme](./README.ko.md)
+
 A simple Electron application that launches web-based messenger apps in a single desktop application. This project serves as a sample for loading web versions of messenger applications that may not have native desktop clients or are blocked from installation on a corporate PC.
 
 ## Messengers Included
